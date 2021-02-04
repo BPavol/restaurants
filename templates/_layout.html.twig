@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Restaurant finder" />
+        <meta name="author" content="{Pavol Buzák: e-mail: jorg.pavol@gmail.com}" />
+        <title>{% block title %}Restaurant finder{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">About</h4>
+                    <p class="text-muted">
+                        Web application for seraching restaurants. Application contains importing command for two different types of CSV import.
+                        Currently opened restaurants are always on top of the list. You can search restaurants by name, location or cuisine.
+                    </p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Contact</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://github.com/BPavol/restaurants" target="_blank" class="text-white">GitHub</a></li>
+                        <li><a href="https://bpavol.sk/" target="_blank" class="text-white">Personal page</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="{{ path('app_default_index') }}" class="navbar-brand d-flex align-items-center">
+                <i class="fas fa-utensils"></i>&nbsp;
+                <strong>Restaurant finder</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+    </header>
+
+    <main role="main">
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right mb-0">
+                <a href="#">Back to top</a>
+            </p>
+            <p class="mb-0">Example project written in PHP 8.0 with help of Symfony 5.2, Doctrine and MySQL 8.0</p>
+        </div>
+    </footer>
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html>

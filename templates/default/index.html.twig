@@ -1,0 +1,124 @@
+{% extends '_layout.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>
+            Find the best restaurants
+        </h1>
+        <form method="GET" action="{{ path('app_default_index') }}">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <input type="text" name="term" value="{{ term|escape('html_attr') }}" class="form-control" placeholder="Search">
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="{{ path('app_default_index') }}" class="btn btn-danger">Reset</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+        </form>
+        <br />
+
+        <strong>Results:</strong> {{ restaurants|length }}/{{ restaurants.getTotalItemCount }}
+        (in {{ '%.3fs'|format(query_time/1000) }})
+        <div id="main-restaurants-list">
+            {% for restaurant in restaurants %}
+                <div class="card card-restaurant mb-4">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                <h5 class="mb-0">{{ restaurant.title }}</h5>
+                            </div>
+                            <div class="col-6">
+                                <div class="restaurant-price float-right">
+                                    {% if restaurant.price is not same as(null) %}
+                                        {% for i in range(1, restaurant.price) %}
+                                            <i class="fas fa-euro-sign"></i>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                {% if restaurant.rating is not same as(null) %}
+                                    <strong>Rating:</strong>
+                                    <div class="restaurant-rating">
+                                        {% for i in range(1, restaurant.rating) %}
+                                            <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% if restaurant.location is not same as(null) %}
+                                    <strong>Location:</strong>
+                                    <a href="https://maps.google.com/?q={{ restaurant.location|escape('html_attr') }}" target="_blank">
+                                        {{ restaurant.location }}
+                                    </a>
+                                    <br />
+                                {% endif %}
+                                {% if restaurant.cuisine is not same as(null) %}
+                                    <strong>Cuisine:</strong>
+                                    {{ restaurant.cuisine.title }}
+                                    <br />
+                                {% endif %}
+                            </div>
+                            <div class="col-6">
+                                {% if restaurant.openingHours.count %}
+                                    {% if restaurant|opened_now is not same as(null) %}
+                                        <div class="row text-success">
+                                            <div class="col-6 text-right">
+                                                <strong>
+                                                    Opened:
+                                                    {# Show name of the day if still opened from previous day #}
+                                                    {% if restaurant|opened_now.open.format('N') != 'now'|date('N') %}
+                                                        {{ restaurant|opened_now.open.format('l') }}
+                                                    {% endif %}
+                                                </strong>
+                                            </div>
+                                            <div class="col-6">
+                                                {{ restaurant|opened_now.open.format('H:i') }}
+                                                -
+                                                {{ restaurant|opened_now.close.format('H:i') }}
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-danger text-center">
+                                            Currently closed.
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{{ path('app_default_view', {'restaurant': restaurant.id}) }}" class="btn btn-block btn-primary">
+                            <i class="far fa-eye"></i>
+                            Detail
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="scroller-status hidden text-center">
+            <div class="infinite-scroll-request">
+                ...LOADING...
+            </div>
+            <div class="alert alert-info infinite-scroll-last">
+                End of content
+            </div>
+            <div class="alert alert-danger infinite-scroll-error">
+                No more pages to load
+            </div>
+        </div>
+        {{ knp_pagination_render(restaurants) }}
+    </div>
+{% endblock %}

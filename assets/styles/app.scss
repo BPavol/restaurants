@@ -1,0 +1,61 @@
+@import '~bootstrap';
+@import '~@fortawesome/fontawesome-free';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+
+body {
+    background: #fff;
+}
+
+.hidden {
+    display: none;
+}
+
+main {
+    padding: 3rem 0 1rem 0;
+    background: #f8f9fa;
+}
+
+footer {
+    padding: 3rem 0;
+}
+
+.restaurant-price {
+    color: #ffc107;
+}
+
+.restaurant-rating {
+    color: #6c757d;
+}
+
+@keyframes heartbeat
+{
+    0%
+    {
+        transform: scale( .75 );
+    }
+    20%
+    {
+        transform: scale( 1 );
+    }
+    40%
+    {
+        transform: scale( .75 );
+    }
+    60%
+    {
+        transform: scale( 1 );
+    }
+    80%
+    {
+        transform: scale( .75 );
+    }
+    100%
+    {
+        transform: scale( .75 );
+    }
+}
+
+.infinite-scroll-request {
+    animation: heartbeat 1s infinite;
+}

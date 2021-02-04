@@ -1,0 +1,30 @@
+version: '3.1'
+services:
+    php-fpm:
+        build: ./.docker/php-fpm
+        restart: always        
+        volumes:
+            - ./:/var/www/html
+        environment:
+            PHP_IDE_CONFIG: serverName=symfony
+            
+    nginx:
+        build: ./.docker/nginx
+        restart: always     
+        ports:
+            - 80:80
+        volumes:
+            - ./:/var/www/html
+            
+    db:
+        image: mysql:8.0
+        restart: always 
+        ports:
+            - 3306:3306
+        volumes:
+            - ./.docker/db:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: restaurants
+            MYSQL_USER: root        
+            MYSQL_PASSWORD: root
