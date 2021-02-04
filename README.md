@@ -16,6 +16,9 @@ Assumptions:
 * All times are local — don’t worry about timezone-awareness
 * Don’t hesitate to be creative if you have time for it ;)
 
+# Demo
+http://206.81.22.72:8082/
+
 # Setup
 Install dependencies:
 ```

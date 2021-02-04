@@ -48,7 +48,7 @@
                         <strong>Opening hours</strong>
                     </div>
                     {% for openingHour in restaurant.openingHours|sort((a, b) => a.open.format('N') <=> b.open.format('N')) %}
-                        <div class="row{{ (restaurant|opened_now).id == openingHour.id ? ' text-success' : '' }}">
+                        <div class="row{{ restaurant|opened_now is not same as (null) and (restaurant|opened_now).id == openingHour.id ? ' text-success' : '' }}">
                             <div class="col-6 text-right">
                                 <strong>
                                     {{ openingHour.open.format('l') }}:
