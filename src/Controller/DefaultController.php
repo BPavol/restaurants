@@ -78,7 +78,7 @@ class DefaultController extends AbstractController
                 OR c.title LIKE :termEscaped
             ')
             ->setParameter('term', $term)
-            ->setParameter('termEscaped', addcslashes($term, "%_").'%');
+            ->setParameter('termEscaped', '%'.addcslashes($term, "%_").'%');
         }
 
         $this->stopwatch->start('query');
